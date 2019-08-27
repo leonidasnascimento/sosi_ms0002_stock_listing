@@ -1,0 +1,7 @@
+{
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/193566cc-72b4-4876-a139-028a104a3700/resourceGroups/SoSI/providers/Microsoft.Web/sites/sosi-ms0002-stock-listing",
+    "appService.deploySubpath": ""
+}
