@@ -5,7 +5,7 @@ var HttpStatus = require('http-status-codes');
 
 /* GET */
 router.get('/', function (req, res, next) {
-  res.send('GET - Not Implemented')
+  res.status(HttpStatus.METHOD_NOT_ALLOWED).send('GET - Not Implemented')
 });
 
 /* POST */
@@ -31,7 +31,7 @@ router.post('/', function (req, res, next) {
 
 /* DELETE */
 router.delete('/', function (req, res, next) {
-  res.send('DELETE - Not Implemented')
+  res.status(HttpStatus.METHOD_NOT_ALLOWED).send('DELETE - Not Implemented')
 })
 
 module.exports = router;
