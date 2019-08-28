@@ -1,9 +1,21 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+var stock_dao = require('../data/dal_stock');
 
-/* GET home page. */
+/* GET */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'SoSI - Microservice for stock listing' });
+  res.send('GET - Not Implemented')
 });
+
+/* POST */
+router.post('/', function(req, res, next){
+  obj = new stock_dao().add_stock(req.body)
+  res.send(obj)
+});
+
+/* DELETE */
+router.delete('/', function(req, res, next){
+  res.send('DELETE - Not Implemented')
+})
 
 module.exports = router;
