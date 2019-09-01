@@ -5,33 +5,32 @@ var HttpStatus = require('http-status-codes');
 
 /* GET */
 router.get('/', function (req, res, next) {
-  res.status(HttpStatus.METHOD_NOT_ALLOWED).send('GET - Not Implemented')
+  new stock_dao()
+    .get_stock(req.query['code'], function (data) {
+      res.status(HttpStatus.OK).send(data);
+    }, function (data) {
+      res.status(HttpStatus.METHOD_FAILURE).send(data);
+    });
 });
 
 /* POST */
 router.post('/', function (req, res, next) {
-  var obj = new stock_dao().add_stock(req.body)
-  var statusCode = HttpStatus.OK
-  var msg = ''
-
-  obj
-    .catch((reason) => {
-      statusCode = HttpStatus.METHOD_FAILURE
-      msg = reason
-    })
-    .then((result) => {
-
-      if (msg === '') {
-        msg = result
-      }
-
-      res.status(statusCode).send(msg)
+  new stock_dao()
+    .add_stock(req.body, function (data) {
+      res.status(HttpStatus.OK).send(data);
+    }, function (data) {
+      res.status(HttpStatus.METHOD_FAILURE).send(data);
     });
 });
 
 /* DELETE */
 router.delete('/', function (req, res, next) {
-  res.status(HttpStatus.METHOD_NOT_ALLOWED).send('DELETE - Not Implemented')
+  new stock_dao()
+    .delete_stock(req.query['code'], function (data) {
+      res.status(HttpStatus.OK).send(data);
+    }, function (data) {
+      res.status(HttpStatus.METHOD_FAILURE).send(data);
+    })
 })
 
 module.exports = router;
