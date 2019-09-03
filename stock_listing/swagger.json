@@ -58,7 +58,7 @@
           "200": {
             "description": "Sucess",
             "schema": {
-              "$ref": "#/definitions/PostResponse"
+              "$ref": "#/definitions/Operation"
             }
           },
           "420": {
@@ -89,10 +89,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/GetResponse"
-              }
+              "$ref": "#/definitions/Stock"
             }
           },
           "420": {
@@ -125,7 +122,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/DeleteResponse"
+                "$ref": "#/definitions/Operation"
               }
             }
           },
@@ -168,48 +165,21 @@
         }
       }
     },
-    "PostResponse": {
+    "Operation": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "GetResponse": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "DeleteResponse": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
+        "_writeTime": {
+          "type": "object",
+          "properties": {
+            "_seconds": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "_nanoseconds": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
         }
       }
     }
