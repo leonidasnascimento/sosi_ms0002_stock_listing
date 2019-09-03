@@ -1,0 +1,217 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "**This was developed for personal use only**. \n\nThis service is responsible for operate the SoSI's stock list based on brazilian stocks. The data here does **NOT** reflect the real state of Brazil's stock market & is **NOT** provided by its official controller. All doubts and concerns on Brazil's stock market should be directed to [B3](http://www.b3.com.br/pt_br).",
+    "version": "0.0.1b",
+    "title": "SoSI - Stock Listing",
+    "termsOfService": "",
+    "contact": {
+      "email": "leonidas.nascimento@live.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "sosi-ms0002-stock-listing.azurewebsites.net",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "stock-listing",
+      "description": "List of companies listed on brazilian stock market",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://bit.ly/2lW0NXt"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "stock-listing"
+        ],
+        "summary": "Add a new company to the list of brazilian stock market companies controlled by SoSI",
+        "description": "",
+        "operationId": "addCompany",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Company listed on Brazil's stock market",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Stock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "schema": {
+              "$ref": "#/definitions/PostResponse"
+            }
+          },
+          "420": {
+            "description": "Method failure due to processing error. Redo operation."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "stock-listing"
+        ],
+        "summary": "Find a company listed on SoSI's stock list",
+        "description": "",
+        "operationId": "getCompanyByStockCode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Stock code to look for into the database",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetResponse"
+              }
+            }
+          },
+          "420": {
+            "description": "Method failure due to processing error. Redo operation."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "stock-listing"
+        ],
+        "summary": "Delete a company from the stock list",
+        "description": "",
+        "operationId": "deleteCompanyByStockCode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Stcok code to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DeleteResponse"
+              }
+            }
+          },
+          "420": {
+            "description": "Method failure due to processing error. Redo operation."
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Stock": {
+      "type": "object",
+      "required": [
+        "code",
+        "company",
+        "date_time_operation"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "string",
+          "description": "Company's stock code"
+        },
+        "company": {
+          "type": "string",
+          "format": "string",
+          "description": "Company's name"
+        },
+        "detail": {
+          "type": "string",
+          "format": "stirng",
+          "description": "Important details on the company"
+        },
+        "date_time_operation": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Operation date time. Ex.: '2019-09-02T13:10:14.844081+00:00'"
+        }
+      }
+    },
+    "PostResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "GetResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
