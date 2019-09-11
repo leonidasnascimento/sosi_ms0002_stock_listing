@@ -45,8 +45,12 @@ module.exports = class {
     initialize_app() {
         if (admin.apps.length <= 0) {
             admin.initializeApp({
-                credential: admin.credential.cert(service_account),
-                databaseURL: "https://sosi-233713.firebaseio.com"
+                credential: admin.credential.cert({
+                    clientEmail: service_account.client_email,
+                    privateKey: String(service_account.private_key).replace(/\\n/g, '\n'),
+                    projectId: service_account.project_id
+                }),
+                databaseURL: "https://"+ String(service_account.project_id) + ".firebaseio.com"
             });
         }
     }
