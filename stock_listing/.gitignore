@@ -62,3 +62,6 @@ typings/
 
 # GCP Services Acounts
 sosi_gcp_nosql_service_account.json
+sosi_gcp_nosql_service_account
+_sosi_gcp_nosql_service_account.json
+_sosi_gcp_nosql_service_account
