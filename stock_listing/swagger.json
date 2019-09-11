@@ -14,7 +14,7 @@
     }
   },
   "host": "sosi-ms0002-stock-listing.azurewebsites.net",
-  "basePath": "/v1",
+  "basePath": "/",
   "tags": [
     {
       "name": "stock-listing",
