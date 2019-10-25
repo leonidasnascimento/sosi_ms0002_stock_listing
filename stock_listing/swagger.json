@@ -72,7 +72,7 @@
         ],
         "summary": "Find a company listed on SoSI's stock list",
         "description": "",
-        "operationId": "getCompanyByStockCode",
+        "operationId": "getStockByStockCode",
         "produces": [
           "application/json"
         ],
@@ -131,6 +131,28 @@
           }
         },
         "deprecated": false
+      }
+    },
+    "/stocks_cvm_code": {
+      "get": {
+        "tags": [
+          "stock-cvm-code"
+        ],
+        "summary": "Retrieve available stocks CVM Code",
+        "description": "",
+        "operationId": "getStocksCvmCode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "420": {
+            "description": "Method failure due to processing error. Redo operation."
+          }
+        }
       }
     }
   },

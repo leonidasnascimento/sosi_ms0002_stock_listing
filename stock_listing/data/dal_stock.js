@@ -38,6 +38,29 @@ module.exports = class {
             });
     }
 
+    get_stocks_cvm_code(on_success, on_error) {
+        this.initialize_app();
+
+        admin.firestore()
+            .collection(db_collection)
+            .get()
+            .then(doc => {
+                let docs_aux = []
+                
+                doc.docs.forEach(d => {
+                    if (d.data().cvm_code != ""){
+                        let val = {'stock': d.data().code, 'cvm_code': d.data().cvm_code}
+                        docs_aux.push(val)
+                    }
+                })
+                
+                on_success(docs_aux)
+            })
+            .catch((err) => {
+                on_error('Error getting documents => ' + err)
+            });
+    }
+
     delete_stock(doc_id, on_success, on_error) {
         on_error("Method not implementd!")
     }
@@ -50,7 +73,7 @@ module.exports = class {
                     privateKey: String(service_account.private_key).replace(/\\n/g, '\n'),
                     projectId: service_account.project_id
                 }),
-                databaseURL: "https://"+ String(service_account.project_id) + ".firebaseio.com"
+                databaseURL: "https://" + String(service_account.project_id) + ".firebaseio.com"
             });
         }
     }

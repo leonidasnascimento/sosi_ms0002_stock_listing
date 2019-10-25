@@ -17,6 +17,16 @@ router.get('/', function (req, res, next) {
     });
 });
 
+/* GET STOCKS CVM CODE*/
+router.get('/stocks_cvm_code', function (req, res, next) {
+  new stock_dao()
+    .get_stocks_cvm_code(function (data) {
+      res.status(HttpStatus.OK).send(data);
+    }, function (data) {
+      res.status(HttpStatus.METHOD_FAILURE).send(data);
+    });
+});
+
 /* POST */
 router.post('/', function (req, res, next) {
   new stock_dao()
