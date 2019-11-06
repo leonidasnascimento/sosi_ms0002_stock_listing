@@ -46,14 +46,41 @@ module.exports = class {
             .get()
             .then(doc => {
                 let docs_aux = []
-                
+
                 doc.docs.forEach(d => {
-                    if (d.data().cvm_code != ""){
-                        let val = {'stock': d.data().code, 'cvm_code': d.data().cvm_code}
+                    if (d.data().cvm_code != "") {
+                        let val = {
+                            'stock': d.data().code,
+                            'cvm_code': d.data().cvm_code
+                        }
                         docs_aux.push(val)
                     }
                 })
-                
+
+                on_success(docs_aux)
+            })
+            .catch((err) => {
+                on_error('Error getting documents => ' + err)
+            });
+    }
+
+    get_stock_code_list(on_success, on_error) {
+        this.initialize_app();
+
+        admin.firestore()
+            .collection(db_collection)
+            .get()
+            .then(doc => {
+                let docs_aux = []
+
+                doc.docs.forEach(d => {
+                    let val = {
+                        'stock': d.data().code
+                    }
+
+                    docs_aux.push(val)
+                })
+
                 on_success(docs_aux)
             })
             .catch((err) => {
