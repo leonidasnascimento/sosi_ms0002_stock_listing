@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
-const db_collection = 'stock_list'
-
 let service_account = require('../sosi_gcp_nosql_service_account.json');
+
+const db_collection = 'stock_list'
 
 module.exports = class {
     add_stock(obj, on_success, on_error) {
@@ -64,7 +64,7 @@ module.exports = class {
             });
     }
 
-    get_stock_code_list(on_success, on_error) {
+    get_stock_code_list(on_success, on_error) {       
         this.initialize_app();
 
         admin.firestore()
