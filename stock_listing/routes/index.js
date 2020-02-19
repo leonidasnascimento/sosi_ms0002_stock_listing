@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const stock_dao = require('../data/dal_stock');
 const HttpStatus = require('http-status-codes');
-const cacheDb = require("sosi_cache_db_manager") //require('../data/redis_manager')
+const cacheDb = require("sosi_cache_db_manager");
 const cacheDb_key = "sosi_ms0002_stock_listing.get_stock_code_list"
 
 /* GET */
