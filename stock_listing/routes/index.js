@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const stock_dao = require('../data/dal_stock');
 const HttpStatus = require('http-status-codes');
-const redis = require('../data/redis_manager')
-const redis_key_stock_code_list = "sosi_ms0002_stock_listing.get_stock_code_list"
+const cacheDb = require("sosi_cache_db_manager") //require('../data/redis_manager')
+const cacheDb_key = "sosi_ms0002_stock_listing.get_stock_code_list"
 
 /* GET */
 router.get('/', function (req, res, next) {
@@ -31,18 +31,16 @@ router.get('/stocks_cvm_code', function (req, res, next) {
 
 /* GET STOCK CODE LIST */
 router.get('/stock_code_list', function (req, res, next) {
-  var redis_mngr = new redis()
+  var cacheDbMngr = new cacheDb(cacheDb_key)
 
   //Trying to get data from Redis
-  redis_mngr.get_value(redis_key_stock_code_list, function (obj) {    
+  cacheDbMngr.getValue(function (obj) {
     if (obj.data !== null) {
-      console.info(obj.message)
       res.status(HttpStatus.OK).send(JSON.parse(obj.data));
     } else {
       //Going to main db to retrieve the data if some error occurr when getting from Redis
       new stock_dao()
         .get_stock_code_list(function (data) {
-          console.log("Data was retrieved from main db")
           res.status(HttpStatus.OK).send(data);
         }, function (data) {
           res.status(HttpStatus.METHOD_FAILURE).send(data);
@@ -55,14 +53,18 @@ router.get('/stock_code_list', function (req, res, next) {
 
 /* UPDATE STOCK CODE LIST ON CACHE SERVER */
 router.put('/stock_code_list', function (req, res, next) {
-  var redis_mngr = new redis()
+  var cacheDbMngr = new cacheDb(cacheDb_key)
   var stock = new stock_dao()
 
   stock.get_stock_code_list(function (data) {
-    redis_mngr.set_value(redis_key_stock_code_list, data, function (obj) {
+    cacheDbMngr.setValue(data, function (obj) {
       res.status(HttpStatus.OK).send(obj)
-    }, function (e_data) {})
-  }, function (data) {})
+    }, function (error) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error)
+    })
+  }, function (data) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error)
+  })
 });
 
 /* POST */

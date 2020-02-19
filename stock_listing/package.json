@@ -16,6 +16,8 @@
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
     "redis": "^2.8.0",
-    "swagger-ui-express": "^4.0.7"
+    "sosi_cache_db_manager": "^1.1.1",
+    "swagger-ui-express": "^4.0.7",
+    "vsts-npm-auth": "^0.37.0"
   }
 }
