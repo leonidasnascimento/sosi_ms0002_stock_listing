@@ -64,7 +64,7 @@ module.exports = class {
             });
     }
 
-    get_stock_code_list(on_success, on_error) {       
+    get_stock_code_list(on_success, on_error) {
         this.initialize_app();
 
         admin.firestore()
@@ -74,8 +74,12 @@ module.exports = class {
                 let docs_aux = []
 
                 doc.docs.forEach(d => {
+                    let data = d.data()
                     let val = {
-                        'stock': d.data().code
+                        'stock': ('code' in data) ? data.code : '',
+                        'cvm_code': ('cvm_code' in data) ? data.cvm_code : '',
+                        'available_volume': ('available_volume' in data) ? Number(data.available_volume) : 0,
+                        'stock_type': ('stock_type' in data) ? data.stock_type : '',
                     }
 
                     docs_aux.push(val)
